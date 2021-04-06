@@ -13,32 +13,40 @@ app.post("/update/:q", async (req, res) => {
 	let symbol = req.params.q;
 	let props = req.body;
 
-	let params = {
-		symbol: symbol,
-		from: props.start,
-		to: props.end,
-		period: "m",
-	};
+	props.monthly = props.monthly || 0;
 
 	try {
-		let stock = await yahooFinance.quote({
+		// let stock = await yahooFinance.quote({
+		// 	symbol: symbol,
+		// 	modules: ["price"],
+		// });
+		// stock = stock.price;
+
+		let stock = {};
+
+		let params = {
 			symbol: symbol,
-			modules: ["price"],
-		});
-		stock = stock.price;
+			from: moment(props.start).startOf("year").format("YYYY-MM-DD"), // props.start,
+			to: moment(props.end).endOf("year").format("YYYY-MM-DD"), //props.end,
+			period: "m",
+		};
 
 		let data = await yahooFinance.historical(params);
 
-		const lmonth = moment(data[0].date).format("YYYYMM");
-		const l0month = moment(data[1].date).format("YYYYMM");
-		if (lmonth == l0month) {
-			data.splice(0, 1);
+		if (data && data.length >= 2) {
+			const lmonth = moment(data[0].date).format("YYYYMM");
+			const l0month = moment(data[1].date).format("YYYYMM");
+			if (lmonth == l0month) {
+				data.splice(0, 1);
+			}
 		}
 
 		data.sort((a, b) => a.date - b.date);
 
 		stock.qty = 0;
 		stock.amount_invested = 0;
+
+		let lastprice = 0;
 
 		for (let i = 0; i < data.length; i++) {
 			let el = data[i];
@@ -55,9 +63,12 @@ app.post("/update/:q", async (req, res) => {
 
 			stock.qty += parseFloat(el.qty);
 			stock.amount_invested += el.invested;
+
+			lastprice = parseFloat(el.open);
 		}
 
-		stock.amount = parseFloat(stock.qty * stock.regularMarketPrice).toFixed(2);
+		// stock.amount = parseFloat(stock.qty * stock.regularMarketPrice).toFixed(2);
+		stock.amount = parseFloat(stock.qty * lastprice).toFixed(2);
 		stock.qty = parseFloat(stock.qty).toFixed(4);
 
 		stock.return = parseFloat(parseFloat(stock.amount) - parseFloat(stock.amount_invested)).toFixed(2);
