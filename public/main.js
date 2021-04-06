@@ -67,10 +67,9 @@ new Vue({
 						type: "is-danger",
 						position: "is-bottom-right",
 					});
-					return false;
+				} else {
+					this.details = data;
 				}
-
-				this.details = data;
 			} catch (e) {
 				console.log(e);
 			}
