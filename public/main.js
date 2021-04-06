@@ -77,5 +77,11 @@ new Vue({
 			this.loading = false;
 		},
 	},
-	mounted() {},
+	mounted() {
+		var app = document.getElementById("app");
+		app.classList.remove("hide");
+
+		var loading = document.getElementById("loading");
+		loading.classList.add("hide");
+	},
 });
