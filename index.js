@@ -15,6 +15,14 @@ app.post("/update/:q", async (req, res) => {
 
 	props.monthly = props.monthly || 0;
 
+	if (!props.monthly && !props.initial) {
+		return res.json({ props, error: true, message: "Please enter Initial amount or monthly contribution." });
+	}
+
+	if (props.start > props.end) {
+		return res.json({ props, error: true, message: "Start Year should be less than or equal to End Year." });
+	}
+
 	try {
 		// let stock = await yahooFinance.quote({
 		// 	symbol: symbol,
@@ -79,7 +87,7 @@ app.post("/update/:q", async (req, res) => {
 		return res.json({ props, data, stock });
 	} catch (error) {
 		console.log(error);
-		return res.json({ props, error: true });
+		return res.json({ props, error: true, message: error.statusText });
 	}
 });
 

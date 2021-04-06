@@ -63,7 +63,7 @@ new Vue({
 				if (data.error) {
 					this.$buefy.snackbar.open({
 						duration: 5000,
-						message: "Error in fetching data, Please review the data and try again!",
+						message: data.message || "Error in fetching data, Please review the data and try again!",
 						type: "is-danger",
 						position: "is-bottom-right",
 					});
