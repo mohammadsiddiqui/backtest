@@ -84,5 +84,5 @@ app.get("/search/:q", async (req, res) => {
 	}
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4004;
 app.listen(port, () => console.log(`App listening to port http://localhost:${port}`));
