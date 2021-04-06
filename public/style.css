@@ -29,7 +29,8 @@ body {
 	display: none;
 }
 
-.panel-block {
+.panel-block,
+.caption {
 	font-size: 90%;
 }
 

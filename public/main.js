@@ -11,10 +11,11 @@ new Vue({
 			{
 				field: "date",
 				label: "Date",
+				width: "150",
 			},
 
 			{
-				field: "open",
+				field: "adjClose",
 				label: "Stock Price",
 				centered: true,
 			},
@@ -27,7 +28,25 @@ new Vue({
 
 			{
 				field: "invested",
-				label: "Invested Amount",
+				label: "Monthly Contribution",
+				centered: true,
+			},
+
+			{
+				field: "total_invested",
+				label: "Total Investmented",
+				centered: true,
+			},
+
+			{
+				field: "total_amount",
+				label: "Investment Value",
+				centered: true,
+			},
+
+			{
+				field: "return_percent",
+				label: "Return %",
 				centered: true,
 			},
 		],

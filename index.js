@@ -24,12 +24,6 @@ app.post("/update/:q", async (req, res) => {
 	}
 
 	try {
-		// let stock = await yahooFinance.quote({
-		// 	symbol: symbol,
-		// 	modules: ["price"],
-		// });
-		// stock = stock.price;
-
 		let stock = {};
 
 		let params = {
@@ -64,15 +58,23 @@ app.post("/update/:q", async (req, res) => {
 			el.invested = parseFloat(props.monthly || 0);
 
 			if (i == 0 && props.initial) el.invested = parseFloat(props.monthly || 0) + parseFloat(props.initial || 0);
-			el.qty = el.invested / el.open;
+			el.qty = el.invested / el.adjClose;
 
 			el.qty = parseFloat(el.qty).toFixed(4);
-			el.open = parseFloat(el.open).toFixed(2);
+			el.adjClose = parseFloat(el.adjClose).toFixed(2);
 
 			stock.qty += parseFloat(el.qty);
 			stock.amount_invested += el.invested;
 
-			lastprice = parseFloat(el.open);
+			lastprice = parseFloat(el.adjClose);
+
+			el.total_invested = parseFloat(stock.amount_invested).toFixed(2);
+			el.total_qty = parseFloat(stock.qty).toFixed(4);
+			el.total_amount = parseFloat(stock.qty * lastprice).toFixed(2);
+
+			el.return = parseFloat(parseFloat(el.total_amount) - parseFloat(el.total_invested)).toFixed(2);
+			el.return_percent = parseFloat((parseFloat(el.return) * 100) / parseFloat(el.total_invested)).toFixed(2);
+			el.return_percent = el.return_percent + "%";
 		}
 
 		// stock.amount = parseFloat(stock.qty * stock.regularMarketPrice).toFixed(2);

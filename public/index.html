@@ -14,11 +14,11 @@
 
 <body class="has-background-light">
 
-  <div class="container hide" id="app">
+  <div class="container is-fluid hide" id="app">
     <section class="hero is-fullheight">
       <div class="mt-4">
         <div class="columns is-centered f1">
-          <div class="column is-12 is-5-desktop ">
+          <div class="column is-12 is-4-desktop ">
             <div class="card is-shadowless has-background-white">
               <header class="card-header is-shadowless">
                 <p class="card-header-title">
@@ -57,7 +57,7 @@
               </div>
             </div>
           </div>
-          <div class="column is-12 is-7-desktop" v-if="details">
+          <div class="column is-12 is-8-desktop" v-if="details">
             <div class="card is-shadowless has-background-white">
               <div class="panel is-shadowless">
                 <p class="panel-heading"> Summary </p>
@@ -78,7 +78,7 @@
               </div>
             </div>
             <div class="card is-shadowless has-background-white mt-3">
-              <b-table :data="details.data" :columns="columns"></b-table>
+              <b-table :data="details.data" :columns="columns" class="caption"></b-table>
             </div>
           </div>
         </div>
