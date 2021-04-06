@@ -1,0 +1,44 @@
+html,
+body {
+	min-height: 100vh;
+	padding: 0;
+	margin: 0;
+}
+
+.w1 {
+	width: 100%;
+}
+
+.f1 {
+	flex: 1;
+}
+
+.ait {
+	align-items: start !important;
+}
+
+.bor {
+	border: 1px solid #ddd;
+}
+
+.show {
+	visibility: 1;
+}
+
+.hide {
+	visibility: hidden;
+}
+
+.panel-block {
+	font-size: 90%;
+}
+
+.light input {
+	background: #f5f5f5 !important;
+}
+
+.flex-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Stocks Backtest </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@5.8.55/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+  <script src="https://polyfill.io/v3/polyfill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+</head>
+
+<body class="has-background-light">
+  <div class="container" id="app">
+    <section class="hero is-fullheight">
+      <div class="mt-4">
+        <div class="columns is-centered f1">
+          <div class="column is-12 is-5-desktop ">
+            <div class="card is-shadowless has-background-white">
+              <header class="card-header is-shadowless">
+                <p class="card-header-title">
+                  Search For Stock
+                </p>
+              </header>
+              <div class="card-content mt-2 pt-2" v-if="!selected">
+                <input class="input" type="text" placeholder="Search Stock" v-model="search" @input="getData">
+                <div class="panel is-shadowless bor mt-2" v-if="results && results.length > 0">
+                  <a class="panel-block" v-for="x in results" @click="showDetail(x)">
+                    <span>{{x.longname }} - {{x.symbol}}</span>
+                  </a>
+                </div>
+              </div>
+              <div class="card-content mt-2 pt-2 " v-else>
+                <b-input v-model="selected" class="light" type="email" icon-right="close-circle" readonly
+                  icon-right-clickable @icon-right-click="clear">
+                </b-input>
+
+                <b-field label="Initial Amount" class="mt-3">
+                  <b-input v-model="props.initial" type="number"></b-input>
+                </b-field>
+
+                <b-field label="Start year (YYYY)">
+                  <b-input v-model="props.start" type="number"></b-input>
+                </b-field>
+
+                <b-field label="End year (YYYY)">
+                  <b-input v-model="props.end" type="number"></b-input>
+                </b-field>
+
+                <b-field label="Monthly Amount">
+                  <b-input v-model="props.monthly" type="number"></b-input>
+                </b-field>
+                <b-button type="is-primary" :loading="loading" class="mt-2 w1" @click="getDetails">Back Test </b-button>
+              </div>
+            </div>
+          </div>
+          <div class="column is-12 is-7-desktop" v-if="details">
+            <div class="card is-shadowless has-background-white">
+              <div class="panel is-shadowless">
+                <p class="panel-heading"> Summary </p>
+                <div class="panel-block flex-bar">
+                  <div class="is-6 title">Invested Amount</div>
+                  <div class="is-6 title has-text-right">{{details.stock.amount_invested}}</div>
+                </div>
+                <div class="panel-block flex-bar">
+                  <div class="is-6 title">Total Value</div>
+                  <div class="is-6 title has-text-right">{{details.stock.amount}}</div>
+                </div>
+                <div class="panel-block flex-bar">
+                  <div class="is-6 title">Return</div>
+                  <div class="is-6 title has-text-right">
+                    <span>{{details.stock.return}} ({{details.stock.return_percent}}%)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card is-shadowless has-background-white mt-3">
+              <b-table :data="details.data" :columns="columns"></b-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="/main.js"> </script>
+</body>
+
+</html>
