@@ -28,8 +28,8 @@ app.post("/update/:q", async (req, res) => {
 
 		let params = {
 			symbol: symbol,
-			from: moment(props.start).startOf("year").format("YYYY-MM-DD"), // props.start,
-			to: moment(props.end).endOf("year").format("YYYY-MM-DD"), //props.end,
+			from: moment(props.start).format("YYYY-MM-DD"), // props.start,
+			to: moment(props.end).format("YYYY-MM-DD"), //props.end,
 			period: "m",
 		};
 

@@ -48,13 +48,15 @@
                 <b-field label="Initial Amount" class="mt-3">
                   <b-input v-model="props.initial" type="number"></b-input>
                 </b-field>
-
-                <b-field label="Start year (YYYY)">
-                  <b-input v-model="props.start" type="number"></b-input>
+                <div class="is-size-7">Investment will be done on 1st of every month</div>
+                <b-field label="Start Date">
+                  <b-datepicker v-model="props.start" icon="calendar-today" trap-focus>
+                  </b-datepicker>
                 </b-field>
 
-                <b-field label="End year (YYYY)">
-                  <b-input v-model="props.end" type="number"></b-input>
+                <b-field label="End Date ">
+                  <b-datepicker v-model="props.end" icon="calendar-today" trap-focus>
+                  </b-datepicker>
                 </b-field>
 
                 <b-field label="Monthly Amount">
